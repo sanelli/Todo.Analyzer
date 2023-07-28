@@ -2,9 +2,13 @@
 // Copyright (c) Stefano Anelli. All rights reserved.
 // </copyright>
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Microsoft.CodeAnalysis.Text;
+
+using Todo.Analyzer.Tests.Helpers;
 
 namespace Todo.Analyzer.Tests.Verifiers;
 
@@ -28,9 +32,12 @@ public class TodoAnalyzerTest<TAnalyzer>
         {
             ArgumentNullException.ThrowIfNull(solution);
 
-            var compilationOptions = solution.GetProject(projectId)?.CompilationOptions!;
+            var project = solution.GetProject(projectId)!;
+            var compilationOptions = project.CompilationOptions!;
+            compilationOptions = compilationOptions
+                .WithSpecificDiagnosticOptions(compilationOptions.SpecificDiagnosticOptions.SetItems(CSharpAnalyzerHelper.NullableWarnings))
+                .WithOutputKind(OutputKind.ConsoleApplication);
             solution = solution.WithProjectCompilationOptions(projectId, compilationOptions);
-
             return solution;
         });
 
