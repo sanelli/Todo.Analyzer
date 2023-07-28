@@ -12,7 +12,7 @@ namespace Todo.Analyzer.Format;
 internal sealed class GitHubTodoFormat
     : TodoFormat
 {
-    private static readonly Regex ExpectedToMatch = new(@" TODO \[\#[0-9]+\] .*\.", RegexOptions.Compiled);
+    private static readonly Regex ExpectedToMatch = new(@"^ TODO \[\#[0-9]+\] .*\.$", RegexOptions.Compiled);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GitHubTodoFormat"/> class.
