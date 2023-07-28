@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer", "Todo.Analyzer\Todo.Analyzer.csproj", "{ECBA11DF-6ED1-4AB5-A894-F4B45FAC760C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer.Package", "Todo.Analyzer.Package\Todo.Analyzer.Package.csproj", "{9AEDD7EC-0E13-4D75-912B-1E501FC34B2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer.Tests", "Todo.Analyzer.Tests\Todo.Analyzer.Tests.csproj", "{D7C5A7E2-10A9-4938-B93B-3CFD6E34A377}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C867BC64-0363-4A56-8EDD-9B2509C669CD}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		stylecop.json = stylecop.json
+		AnalyzerReleases.Shipped.md = AnalyzerReleases.Shipped.md
+		AnalyzerReleases.Unshipped.md = AnalyzerReleases.Unshipped.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Todo.Analyzer.Docs", "Todo.Analyzer.Docs", "{1688995C-08AD-4956-99DC-D5975C3BFEA9}"
+	ProjectSection(SolutionItems) = preProject
+		Todo.Analyzer.Docs\TA0001.md = Todo.Analyzer.Docs\TA0001.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer.CodeFixes", "Todo.Analyzer.CodeFixes\Todo.Analyzer.CodeFixes.csproj", "{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECBA11DF-6ED1-4AB5-A894-F4B45FAC760C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECBA11DF-6ED1-4AB5-A894-F4B45FAC760C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECBA11DF-6ED1-4AB5-A894-F4B45FAC760C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECBA11DF-6ED1-4AB5-A894-F4B45FAC760C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AEDD7EC-0E13-4D75-912B-1E501FC34B2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AEDD7EC-0E13-4D75-912B-1E501FC34B2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AEDD7EC-0E13-4D75-912B-1E501FC34B2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AEDD7EC-0E13-4D75-912B-1E501FC34B2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7C5A7E2-10A9-4938-B93B-3CFD6E34A377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C5A7E2-10A9-4938-B93B-3CFD6E34A377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7C5A7E2-10A9-4938-B93B-3CFD6E34A377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7C5A7E2-10A9-4938-B93B-3CFD6E34A377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
