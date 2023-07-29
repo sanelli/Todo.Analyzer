@@ -34,6 +34,8 @@ public sealed class TodoCommentDoNotMatchingCriteria
 
     private static readonly Regex StartsWithSpacesAndSlashAndStar = new(@"^\s*\/\*", RegexOptions.Compiled);
 
+    private static readonly Regex StartsWithSpacesAndSlashAndStarAndStar = new(@"^\s*\/\*\*", RegexOptions.Compiled);
+
     private static readonly Regex StartsWithSpacesAndStar = new(@"^\s*\*", RegexOptions.Compiled);
 
     private static readonly Regex EndsWithSpaceAndStarAndSlashAndSpaces = new(@"\s\*\/\s*$", RegexOptions.Compiled);
@@ -73,6 +75,7 @@ public sealed class TodoCommentDoNotMatchingCriteria
                     HandleSingleLineDocumentationCommentTrivia(context, commentNode, todoFormat);
                     break;
                 case SyntaxKind.MultiLineDocumentationCommentTrivia:
+                    HandleMultiLineDocumentationCommentTrivia(context, commentNode, todoFormat);
                     break;
             }
         }
@@ -145,6 +148,39 @@ public sealed class TodoCommentDoNotMatchingCriteria
 
             // Remove the "///"
             cleanCommentLine = cleanCommentLine.Substring(3);
+            ReportDiagnosticIfCommentLineDoesNotMatchCriteria(context, cleanCommentLine, todoFormat, syntaxNode.GetLocation());
+        }
+    }
+
+    private static void HandleMultiLineDocumentationCommentTrivia(SyntaxTreeAnalysisContext context, SyntaxTrivia syntaxNode, TodoFormat todoFormat)
+    {
+        var commentLines = syntaxNode.ToFullString().Split('\n').ToArray();
+        foreach (var commentLine in commentLines)
+        {
+            var cleanCommentLine = commentLine.Replace("\r", string.Empty);
+
+            if (string.IsNullOrWhiteSpace(cleanCommentLine))
+            {
+                continue;
+            }
+
+            // Remove trailing */
+            // Need to remove trailing first in order to avoid clash with leading *.
+            if (EndsWithSpaceAndStarAndSlashAndSpaces.Match(cleanCommentLine).Success)
+            {
+                cleanCommentLine = cleanCommentLine.TrimEnd().Substring(0, cleanCommentLine.Length - 3);
+            }
+
+            // Remove initial /** or *
+            if (StartsWithSpacesAndSlashAndStarAndStar.Match(cleanCommentLine).Success)
+            {
+                cleanCommentLine = cleanCommentLine.TrimStart().Substring(3);
+            }
+            else if (StartsWithSpacesAndStar.Match(cleanCommentLine).Success)
+            {
+                cleanCommentLine = cleanCommentLine.TrimStart().Substring(1);
+            }
+
             ReportDiagnosticIfCommentLineDoesNotMatchCriteria(context, cleanCommentLine, todoFormat, syntaxNode.GetLocation());
         }
     }
