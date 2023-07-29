@@ -19,7 +19,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaCodeFixProvider
     : CodeFixProvider
 {
     /// <inheritdoc />
-    public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(TodoCommentDoNotMatchingCriteria.Rule.Id);
+    public override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray<string>.Empty;
 
     /// <inheritdoc />
     public sealed override FixAllProvider GetFixAllProvider()
