@@ -28,6 +28,20 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
     }
 
     /// <summary>
+    /// Single line empty comment will not report any diagnostic.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task SingleLineEmptyCommentWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
+        //
+        System.Console.WriteLine("Hello world!");
+        """);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Test that a correctly github formatted single line comment
     /// report no diagnostics.
     /// </summary>
@@ -296,6 +310,85 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Single line comment with no token in the documentation comment will be ignored
+    /// and no diagnostic will be reported.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task SingleLineDocumentationCommentWithoutTodoTokenWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
+        /// <summary>
+        /// This comment will be ignored because there is no T O D O token!
+        /// </summary>
+        int MyMethod() { return -1; }
+
+        System.Console.WriteLine("Hello world!");
+        """);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Empty Single line comment will be ignored
+    /// and no diagnostic will be reported.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task EmptySingleLineDocumentationCommentWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
+        /// <summary>
+        ///
+        /// </summary>
+        int MyMethod() { return -1; }
+
+        System.Console.WriteLine("Hello world!");
+        """);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a correctly github formatted single line documentation comment
+    /// report no diagnostics.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task CorrectlyFormattedGithubTodoSingleLineDocumentationCommentWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
+        /// <summary>
+        /// TODO [#123] This will succeed.
+        /// </summary>
+        int MyMethod() { return -1; }
+
+        System.Console.WriteLine("Hello world!");
+        """);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed single line documentation comment on top of a method
+    /// generates a warning message.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedGithubTodoSingleLineDocumentationCommentWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
+        /// <summary>
+        /// TODO This will fail
+        /// </summary>
+        int MyMethod() { return -1; }
+
+        System.Console.WriteLine("Hello world!");
+        """);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 4));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }

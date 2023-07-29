@@ -70,6 +70,7 @@ public sealed class TodoCommentDoNotMatchingCriteria
                     HandleMultiLineCommentTrivia(context, commentNode, todoFormat);
                     break;
                 case SyntaxKind.SingleLineDocumentationCommentTrivia:
+                    HandleSingleLineDocumentationCommentTrivia(context, commentNode, todoFormat);
                     break;
                 case SyntaxKind.MultiLineDocumentationCommentTrivia:
                     break;
@@ -87,7 +88,14 @@ public sealed class TodoCommentDoNotMatchingCriteria
 
     private static void HandleSingleLineCommentTrivia(SyntaxTreeAnalysisContext context, SyntaxTrivia syntaxNode, TodoFormat todoFormat)
     {
-        var commentLine = syntaxNode.ToFullString().TrimStart().Substring(2);
+        var commentLine = syntaxNode.ToFullString().TrimStart();
+        if (string.IsNullOrWhiteSpace(commentLine))
+        {
+            return;
+        }
+
+        // Remove the //
+        commentLine = commentLine.Substring(2);
         ReportDiagnosticIfCommentLineDoesNotMatchCriteria(context, commentLine, todoFormat, syntaxNode.GetLocation());
     }
 
@@ -97,6 +105,11 @@ public sealed class TodoCommentDoNotMatchingCriteria
         foreach (var commentLine in commentLines)
         {
             var cleanCommentLine = commentLine.Replace("\r", string.Empty);
+
+            if (string.IsNullOrWhiteSpace(cleanCommentLine))
+            {
+                continue;
+            }
 
             // Remove trailing */
             // Need to remove trailing first in order to avoid clash with leading *.
@@ -115,6 +128,23 @@ public sealed class TodoCommentDoNotMatchingCriteria
                 cleanCommentLine = cleanCommentLine.TrimStart().Substring(1);
             }
 
+            ReportDiagnosticIfCommentLineDoesNotMatchCriteria(context, cleanCommentLine, todoFormat, syntaxNode.GetLocation());
+        }
+    }
+
+    private static void HandleSingleLineDocumentationCommentTrivia(SyntaxTreeAnalysisContext context, SyntaxTrivia syntaxNode, TodoFormat todoFormat)
+    {
+        var commentLines = syntaxNode.ToFullString().Split('\n').ToArray();
+        foreach (var commentLine in commentLines)
+        {
+            var cleanCommentLine = commentLine.Replace("\r", string.Empty).TrimStart();
+            if (string.IsNullOrWhiteSpace(cleanCommentLine))
+            {
+                continue;
+            }
+
+            // Remove the "///"
+            cleanCommentLine = cleanCommentLine.Substring(3);
             ReportDiagnosticIfCommentLineDoesNotMatchCriteria(context, cleanCommentLine, todoFormat, syntaxNode.GetLocation());
         }
     }

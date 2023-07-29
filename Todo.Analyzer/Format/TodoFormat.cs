@@ -28,7 +28,10 @@ internal abstract class TodoFormat
     /// </summary>
     /// <param name="commentLine">A single line of comment without comment markers.</param>
     /// <returns><c>true</c> if the comment line should be validated.</returns>
-    internal virtual bool IsTodoCommentLine(string commentLine) => !string.IsNullOrWhiteSpace(commentLine) && commentLine.IndexOf("todo", StringComparison.InvariantCultureIgnoreCase) >= 0;
+    internal virtual bool IsTodoCommentLine(string commentLine)
+    {
+        return !string.IsNullOrWhiteSpace(commentLine) && Array.Exists(commentLine.Split(), token => "todo".Equals(token, StringComparison.OrdinalIgnoreCase));
+    }
 
     /// <summary>
     /// Check if the comment line matched the criteria.
