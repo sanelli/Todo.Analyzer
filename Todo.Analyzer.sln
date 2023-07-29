@@ -28,6 +28,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer.CodeFixes", "Todo.Analyzer.CodeFixes\Todo.Analyzer.CodeFixes.csproj", "{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A2BB9839-EAE5-456C-94EC-2316FE4C4363}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\RunTests.ps1 = Scripts\RunTests.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

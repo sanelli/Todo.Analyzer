@@ -10,6 +10,7 @@ namespace Todo.Analyzer.Tests;
 /// <summary>
 /// Test class for <see cref="TodoCommentDoNotMatchingCriteria"/>.
 /// </summary>
+[UnitTest("TD0001")]
 public sealed class TodoCommentDoNotMatchingCriteriaTests
 {
     /// <summary>
