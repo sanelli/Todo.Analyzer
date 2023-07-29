@@ -4,4 +4,4 @@
 
 Rule ID | Category | Severity | Notes
 --------|----------|----------|-------
-TA0001  | Documentation |  Warning | TA0001_TodoCommentDoNotMatchingCriteria, [Documentation](https://github.com/sanelli/Todo.Analyzer/Todo.Analyzer.Docs/TA0001.md)
+TA0001  | Documentation |  Warning | TA0001_TodoCommentDoNotMatchingCriteria, [Documentation](https://github.com/sanelli/Todo.Analyzer/Documentation/TA0001.md)

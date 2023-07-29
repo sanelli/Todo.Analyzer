@@ -20,9 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		AnalyzerReleases.Unshipped.md = AnalyzerReleases.Unshipped.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Todo.Analyzer.Docs", "Todo.Analyzer.Docs", "{1688995C-08AD-4956-99DC-D5975C3BFEA9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1688995C-08AD-4956-99DC-D5975C3BFEA9}"
 	ProjectSection(SolutionItems) = preProject
-		Todo.Analyzer.Docs\TA0001.md = Todo.Analyzer.Docs\TA0001.md
+		Documentation\README.md = Documentation\README.md
+		Documentation\TA0001.md = Documentation\TA0001.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer.CodeFixes", "Todo.Analyzer.CodeFixes\Todo.Analyzer.CodeFixes.csproj", "{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}"
