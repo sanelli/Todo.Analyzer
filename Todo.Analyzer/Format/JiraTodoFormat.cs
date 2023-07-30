@@ -18,7 +18,6 @@ internal sealed class JiraTodoFormat
     /// Initializes a new instance of the <see cref="JiraTodoFormat"/> class.
     /// </summary>
     public JiraTodoFormat()
-        : base()
     {
     }
 

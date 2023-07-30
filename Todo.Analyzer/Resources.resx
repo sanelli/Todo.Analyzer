@@ -19,10 +19,10 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="TD0001_Title" xml:space="preserve">
-        <value>TODO comment malformed</value>
+        <value>Comment malformed</value>
     </data>
     <data name="TD0001_MessageFormat" xml:space="preserve">
-        <value>does not respect the expected format for TODO comments</value>
+        <value>does not respect the expected format for the comments</value>
     </data>
     <data name="TD0001_Description" xml:space="preserve">
         <value>Malformed comment.</value>

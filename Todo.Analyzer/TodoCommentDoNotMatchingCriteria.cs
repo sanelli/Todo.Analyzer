@@ -14,7 +14,7 @@ using Todo.Analyzer.Format;
 namespace Todo.Analyzer;
 
 /// <summary>
-/// Analyzer reporting the TD0001 warning.
+/// Analyzer reporting the TA0001 warning.
 /// </summary>
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public sealed class TodoCommentDoNotMatchingCriteria

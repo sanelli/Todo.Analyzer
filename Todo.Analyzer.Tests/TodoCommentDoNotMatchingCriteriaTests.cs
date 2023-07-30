@@ -31,6 +31,36 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             todo_analyzer.comment.format = malformed
             """;
 
+    private const string CustomFormatEditorConfig = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = custom
+            todo_analyzer.comment.format.custom.token_regex = dafare
+            todo_analyzer.comment.format.custom.regex = ^ DAFARE .*\.
+            """;
+
+    private const string CustomFormatEditorConfigWithoutTokenRegex = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = custom
+            todo_analyzer.comment.format.custom.regex = ^ TODO FOO .*\.
+            """;
+
+    private const string CustomFormatEditorConfigWithoutRegex = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = custom
+            todo_analyzer.comment.format.custom.token_regex = TODO
+            """;
+
+    private const string CustomFormatEditorConfigWithWrongSettings = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = custom
+            todo_analyzer.comment.format.custom.token_regex = \q
+            todo_analyzer.comment.format.custom.regex = \q
+            """;
+
     /// <summary>
     /// Single line comment with no token in the comment will be ignored
     /// and no diagnostic will be reported.
@@ -625,7 +655,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
     /// </summary>
     /// <returns>The asynchronous task.</returns>
     [Fact]
-    public async Task MalformedFormatInEditorCOnfigFallbackesToGitHub()
+    public async Task MalformedFormatInEditorConfigFallbackesToGitHub()
     {
         var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
             """
@@ -633,6 +663,172 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             MalformedEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed single line comment with a custom format reports an error.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedSingleLineCommentWithCustomFormatWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // C'è qualcosa dafare qui.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfig);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a single line comment with a custom format does not report an error.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task CorrectSingleLineCommentWithCustomFormatWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // DAFARE Devi completare questo.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a single line comment with a custom format token does not report an error.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task CorrectSingleLineCommentWithCustomFormatWithoutCustomTokenWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // Nothing to see here.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed single line comment with a custom format
+    /// and without custom token regex reports an error.
+    /// This tests that a missing <c>custom.token_regex</c> settings will fallback to default.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedSingleLineCommentWithCustomFormatAndWithoutCustomTokenRegexWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // This TODO needs to be done.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfigWithoutTokenRegex);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a single line comment with a custom format
+    /// and without custom token regex does not reports an error.
+    /// This tests that a missing <c>custom.token_regex</c> settings will fallback to default.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task SingleLineCommentWithCustomFormatAndWithoutCustomTokenRegexWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO FOO this needs to be done.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfigWithoutTokenRegex);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed single line comment with a custom format
+    /// and without custom regex reports an error.
+    /// This tests that a missing <c>custom.regex</c> settings will fallback to default.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedSingleLineCommentWithCustomFormatAndWithoutCustomRegexWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // This TODO needs to be done.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfigWithoutRegex);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a single line comment with a custom format
+    /// and without custom regex does not reports an error.
+    /// This tests that a missing <c>custom.regex</c> settings will fallback to default.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task SingleLineCommentWithCustomFormatAndWithoutCustomRegexWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO this needs to be done.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfigWithoutRegex);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a single line comment with a custom format
+    /// and incorrect token_regex and regex fallback to defaults.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task SingleLineCommentWithCustomFormatAndIncorrectSettingsWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO this needs to be done.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfigWithWrongSettings);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a single line malformed comment with a custom format
+    /// and incorrect token_regex and regex fallback to defaults.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedSingleLineCommentWithCustomFormatAndIncorrectSettingsWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // This TODO needs to be done.
+            System.Console.WriteLine("Hello world!");
+            """,
+            CustomFormatEditorConfigWithWrongSettings);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }
