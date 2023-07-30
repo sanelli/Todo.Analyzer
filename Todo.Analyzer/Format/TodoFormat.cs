@@ -12,16 +12,9 @@ internal abstract class TodoFormat
     /// <summary>
     /// Initializes a new instance of the <see cref="TodoFormat"/> class.
     /// </summary>
-    /// <param name="todoFormatType">The expected type of the comment.</param>
-    protected TodoFormat(TodoFormatType todoFormatType)
+    protected TodoFormat()
     {
-        this.TodoFormatType = todoFormatType;
     }
-
-    /// <summary>
-    /// Gets the format of the comment.
-    /// </summary>
-    internal TodoFormatType TodoFormatType { get; }
 
     /// <summary>
     /// Check if the command line should be validated.

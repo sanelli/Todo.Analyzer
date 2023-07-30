@@ -13,6 +13,24 @@ namespace Todo.Analyzer.Tests;
 [UnitTest("TD0001")]
 public sealed class TodoCommentDoNotMatchingCriteriaTests
 {
+    private const string GitHubEditorConfig = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = github
+            """;
+
+    private const string JiraEditorConfig = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = jira
+            """;
+
+    private const string MalformedEditorConfig = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = malformed
+            """;
+
     /// <summary>
     /// Single line comment with no token in the comment will be ignored
     /// and no diagnostic will be reported.
@@ -487,6 +505,134 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 4));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a correctly github formatted single line comment
+    /// report no diagnostics. The editorconfig content is provided by the user.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task CorrectlyFormattedGithubTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO [#123] This will succeed.
+            System.Console.WriteLine("Hello world!");
+            """,
+            GitHubEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed single line comment on top of a method
+    /// generates a warning message. The editorconfig content is provided by the user.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedGithubTodoSingleLineCommentAndEditorconfigWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO This will fail
+            System.Console.WriteLine("Hello world!");
+            """,
+            GitHubEditorConfig);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a correct GitHub comment will fail with a Jira setting.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task GitHubCommentWithJiraConfigurationWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO [#123] This will fail because it is not a JIRA comment.
+            System.Console.WriteLine("Hello world!");
+            """,
+            JiraEditorConfig);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a correctly JIRA formatted single line comment
+    /// report no diagnostics. The editorconfig content is provided by the user.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task CorrectlyFormattedJiraTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO [STEFANO-1984] This will succeed.
+            System.Console.WriteLine("Hello world!");
+            """,
+            JiraEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed single line Jira comment on top of a method
+    /// generates a warning message. The editorconfig content is provided by the user.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedJiraTodoSingleLineCommentAndEditorconfigWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO This will fail
+            System.Console.WriteLine("Hello world!");
+            """,
+            JiraEditorConfig);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a correct GitHub comment will fail with a Jira setting.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task JiraCommentWithGithubConfigurationWillReportDiagnostic()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO [STEFANO-1984] This will fail because it is not a JIRA comment.
+            System.Console.WriteLine("Hello world!");
+            """,
+            GitHubEditorConfig);
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Test that a malformed editorconfig format will fallback on GitHub format.
+    /// </summary>
+    /// <returns>The asynchronous task.</returns>
+    [Fact]
+    public async Task MalformedFormatInEditorCOnfigFallbackesToGitHub()
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+            // TODO [#123] This will succeed.
+            System.Console.WriteLine("Hello world!");
+            """,
+            MalformedEditorConfig);
         await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
     }
 }

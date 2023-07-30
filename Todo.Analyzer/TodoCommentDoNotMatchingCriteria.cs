@@ -53,12 +53,19 @@ public sealed class TodoCommentDoNotMatchingCriteria
 
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
         context.EnableConcurrentExecution();
-        context.RegisterSyntaxTreeAction(AnalyzeSyntaxTree);
+        context.RegisterCompilationStartAction(RegisterCompilationStart);
     }
 
-    private static void AnalyzeSyntaxTree(SyntaxTreeAnalysisContext context)
+    private static void RegisterCompilationStart(CompilationStartAnalysisContext startContext)
     {
-        var todoFormat = TodoFormatProvider.GetTodoFormat();
+        var optionsProvider = startContext.Options.AnalyzerConfigOptionsProvider;
+        startContext.RegisterSyntaxTreeAction(actionContext => AnalyzeSyntaxTree(actionContext, optionsProvider));
+    }
+
+    private static void AnalyzeSyntaxTree(SyntaxTreeAnalysisContext context, AnalyzerConfigOptionsProvider analyzerConfigOptionsProvider)
+    {
+        var options = analyzerConfigOptionsProvider.GetOptions(context.Tree);
+        var todoFormat = TodoFormatProvider.GetTodoFormat(options);
 
         var root = context.Tree.GetCompilationUnitRoot(context.CancellationToken);
         foreach (var commentNode in root.DescendantTrivia())
