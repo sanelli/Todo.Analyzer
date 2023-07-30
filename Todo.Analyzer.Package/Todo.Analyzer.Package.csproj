@@ -10,7 +10,7 @@
 
     <PropertyGroup>
         <PackageId>Todo.Analyzer</PackageId>
-        <PackageVersion>1.0.0-alpha.1</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <Authors>Stefano Anelli</Authors>
         <PackageLicenseUrl>https://github.com/sanelli/Todo.Analyzer/blob/main/LICENSE</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/sanelli/Todo.Analyzer</PackageProjectUrl>

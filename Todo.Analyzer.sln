@@ -33,6 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A2BB
 		Scripts\RunTests.ps1 = Scripts\RunTests.ps1
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{AB8DDBFC-002C-48E2-AB03-71507DE18681}"
+	ProjectSection(SolutionItems) = preProject
+		.github\merge_and_pull_requests.yml = .github\merge_and_pull_requests.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
