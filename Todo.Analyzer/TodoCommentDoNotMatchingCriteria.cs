@@ -46,12 +46,9 @@ public sealed class TodoCommentDoNotMatchingCriteria
     /// <inheritdoc />
     public override void Initialize(AnalysisContext context)
     {
-        if (context is null)
-        {
-            throw new ArgumentNullException(nameof(context));
-        }
-
+ #pragma warning disable CA1062
         context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
+ #pragma warning restore CA1062
         context.EnableConcurrentExecution();
         context.RegisterCompilationStartAction(RegisterCompilationStart);
     }
@@ -99,13 +96,14 @@ public sealed class TodoCommentDoNotMatchingCriteria
     private static void HandleSingleLineCommentTrivia(SyntaxTreeAnalysisContext context, SyntaxTrivia syntaxNode, TodoFormat todoFormat)
     {
         var commentLine = syntaxNode.ToFullString().TrimStart();
+
+        // Remove the //
+        commentLine = commentLine.Substring(2);
         if (string.IsNullOrWhiteSpace(commentLine))
         {
             return;
         }
 
-        // Remove the //
-        commentLine = commentLine.Substring(2);
         ReportDiagnosticIfCommentLineDoesNotMatchCriteria(context, commentLine, todoFormat, syntaxNode.GetLocation());
     }
 

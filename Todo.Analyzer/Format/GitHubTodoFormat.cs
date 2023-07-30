@@ -18,10 +18,7 @@ internal sealed class GitHubTodoFormat
     /// Initializes a new instance of the <see cref="GitHubTodoFormat"/> class.
     /// </summary>
     public GitHubTodoFormat()
+        : base(DefaultTodoMatchRegex, ExpectedToMatch)
     {
     }
-
-    /// <inheritdoc/>
-    internal override bool HasValidCommentLine(string commentLine)
-        => ExpectedToMatch.Match(commentLine).Success;
 }

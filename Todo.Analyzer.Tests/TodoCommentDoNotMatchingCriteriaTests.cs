@@ -98,7 +98,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
     public async Task SingleLineCommentWithTokenSubstringOfAWordWillNotReportDiagnostic()
     {
         var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
-        // This won't fail because: the-todo-is-not-a-token-on-its-own
+        // This won't fail because: TheTodoIsNotATokenOnItsOwn
         System.Console.WriteLine("Hello world!");
         """);
         await test.RunAsync(CancellationToken.None).ConfigureAwait(false);

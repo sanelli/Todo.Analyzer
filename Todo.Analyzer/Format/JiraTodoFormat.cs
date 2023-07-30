@@ -18,10 +18,7 @@ internal sealed class JiraTodoFormat
     /// Initializes a new instance of the <see cref="JiraTodoFormat"/> class.
     /// </summary>
     public JiraTodoFormat()
+        : base(DefaultTodoMatchRegex, ExpectedToMatch)
     {
     }
-
-    /// <inheritdoc/>
-    internal override bool HasValidCommentLine(string commentLine)
-        => ExpectedToMatch.Match(commentLine).Success;
 }

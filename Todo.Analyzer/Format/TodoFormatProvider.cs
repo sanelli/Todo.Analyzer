@@ -62,7 +62,7 @@ internal static class TodoFormatProvider
             // In case of failure we go back at using the default token.
         }
 
-        return new(@"todo\s+|\s+todo|\s+todo\s+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        return TodoFormat.DefaultTodoMatchRegex;
     }
 
     private static Regex GetCustomValidationRegex(AnalyzerConfigOptions analyzerConfigOptions)

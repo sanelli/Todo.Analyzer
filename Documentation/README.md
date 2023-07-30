@@ -10,7 +10,7 @@ These option can be setup inside the `.editorconfig`:
   - Example: `todo_analyzer.comment.format = github`
 - `todo_analyzer.comment.format.custom.token_regex`
     - Description: The token used to identify if the comment is a TODO when `todo_analyzer.comment.format` is `custom`.
-    - Default: `TODO`
+    - Default: `\bTODO\b`
     - Example: `todo_analyzer.comment.format.custom.token = やるべきこと`
     - Note: This is a regular expression.
 - `todo_analyzer.comment.format.custom.regex`
