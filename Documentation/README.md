@@ -1,4 +1,5 @@
-# Documentation
+# Comment.Todo.Analyzer
+.NET analyzer for C# making sure that all TODO comments respect the same coding standards.
 
 ## Options
 These option can be setup inside the `.editorconfig`:

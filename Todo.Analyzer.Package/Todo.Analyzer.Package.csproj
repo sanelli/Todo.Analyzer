@@ -9,18 +9,20 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Todo.Analyzer</PackageId>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageId>Comment.Todo.Analyzer</PackageId>
+        <PackageVersion>1.0.1</PackageVersion>
         <Authors>Stefano Anelli</Authors>
-        <PackageLicenseUrl>https://github.com/sanelli/Todo.Analyzer/blob/main/LICENSE</PackageLicenseUrl>
         <PackageProjectUrl>https://github.com/sanelli/Todo.Analyzer</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/sanelli/Todo.Analyzer</RepositoryUrl>
+        <RepositoryUrl>https://github.com/sanelli/Todo.Analyzer.git</RepositoryUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Description>Validate that TODO comments follow coding standards.</Description>
-        <PackageReleaseNotes>Initial version.</PackageReleaseNotes>
+        <PackageReleaseNotes>Enable coding standards on TODO comment using GitHub, Jira or custom formats.</PackageReleaseNotes>
         <PackageTags>TODO, comments, documentation, analyzers</PackageTags>
         <DevelopmentDependency>true</DevelopmentDependency>
         <NoPackageAnalysis>true</NoPackageAnalysis>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryType>git</RepositoryType>
 
         <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_AddAnalyzersToOutput</TargetsForTfmSpecificContentInPackage>
     </PropertyGroup>
@@ -36,5 +38,9 @@
             <TfmSpecificPackageFile Include="$(OutputPath)\Todo.Analyzer.CodeFixes.dll" PackagePath="analyzers/dotnet/cs"/>
         </ItemGroup>
     </Target>
+
+    <ItemGroup>
+        <None Include="../Documentation/README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
 
 </Project>
