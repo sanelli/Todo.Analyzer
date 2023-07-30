@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		stylecop.json = stylecop.json
 		AnalyzerReleases.Shipped.md = AnalyzerReleases.Shipped.md
 		AnalyzerReleases.Unshipped.md = AnalyzerReleases.Unshipped.md
+		CODEOWNERS = CODEOWNERS
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1688995C-08AD-4956-99DC-D5975C3BFEA9}"
@@ -31,6 +32,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A2BB9839-EAE5-456C-94EC-2316FE4C4363}"
 	ProjectSection(SolutionItems) = preProject
 		Scripts\RunTests.ps1 = Scripts\RunTests.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{AB8DDBFC-002C-48E2-AB03-71507DE18681}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\merge_and_pull_requests.yml = .github\workflows\merge_and_pull_requests.yml
 	EndProjectSection
 EndProject
 Global
