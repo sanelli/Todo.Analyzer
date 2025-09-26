@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace Todo.Analyzer.Format;
 
 /// <summary>
-/// Github comment style implementation of <see cref="TodoFormat"/>.
+/// Jira comment style implementation of <see cref="TodoFormat"/>.
 /// </summary>
 internal sealed class JiraTodoFormat
     : TodoFormat

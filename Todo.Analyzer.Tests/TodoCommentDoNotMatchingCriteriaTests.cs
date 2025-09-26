@@ -62,6 +62,12 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             todo_analyzer.comment.format.custom.regex = \q
             """;
 
+    private const string PlainEditorConfig = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = plain
+            """;
+
     /// <summary>
     /// Single line comment with no token in the comment will be ignored
     /// and no diagnostic will be reported.
@@ -838,6 +844,27 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
+    }
+
+    /// <summary>
+    /// Test that a correctly plainly-formatted single line comment
+    /// report no diagnostics. The editorconfig content is provided by the user.
+    /// </summary>
+    /// <param name="ending">The ending of the comment line.</param>
+    /// <returns>The asynchronous task.</returns>
+    [Theory]
+    [InlineData(".")]
+    [InlineData("!")]
+    [InlineData("?")]
+    public async Task CorrectlyFormattedPlainTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic(string ending)
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            $"""
+             // TODO: This will succeed{ending}
+             System.Console.WriteLine("Hello world!");
+             """,
+            PlainEditorConfig);
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 }

@@ -28,4 +28,9 @@ internal enum TodoFormatType
     /// A format defined by the developer.
     /// </summary>
     Custom,
+
+    /// <summary>
+    /// Plain format.
+    /// </summary>
+    Plain,
 }
