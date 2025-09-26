@@ -109,12 +109,16 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
     /// Test that a correctly github formatted single line comment
     /// report no diagnostics.
     /// </summary>
+    /// <param name="ending">The type of ending for the line.</param>
     /// <returns>The asynchronous task.</returns>
-    [Fact]
-    public async Task CorrectlyFormattedGithubTodoSingleLineCommentWillNotReportDiagnostic()
+    [Theory]
+    [InlineData(".")]
+    [InlineData("!")]
+    [InlineData("?")]
+    public async Task CorrectlyFormattedGithubTodoSingleLineCommentWillNotReportDiagnostic(string ending)
     {
-        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
-        // TODO [#123] This will succeed.
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest($"""
+        // TODO [#123] This will succeed{ending}
         System.Console.WriteLine("Hello world!");
         """);
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
@@ -599,16 +603,20 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
     /// Test that a correctly JIRA formatted single line comment
     /// report no diagnostics. The editorconfig content is provided by the user.
     /// </summary>
+    /// <param name="ending">The ending of the comment line.</param>
     /// <returns>The asynchronous task.</returns>
-    [Fact]
-    public async Task CorrectlyFormattedJiraTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic()
+    [Theory]
+    [InlineData(".")]
+    [InlineData("!")]
+    [InlineData("?")]
+    public async Task CorrectlyFormattedJiraTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic(string ending)
     {
         var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
-            """
-            // TODO [STEFANO-1984] This will succeed.
+           $"""
+            // TODO [STEFANO-1984] This will succeed{ending}
             System.Console.WriteLine("Hello world!");
             """,
-            JiraEditorConfig);
+           JiraEditorConfig);
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
