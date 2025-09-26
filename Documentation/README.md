@@ -6,7 +6,7 @@ These option can be setup inside the `.editorconfig`:
 
 - `todo_analyzer.comment.format`
   - Description: The format of the comment containing the TODO. 
-  - Accepted values: `github`, `jira`, `custom`
+  - Accepted values: `github`, `jira`, `custom`, `plain`
   - Default: `github`
   - Example: `todo_analyzer.comment.format = github`
 - `todo_analyzer.comment.format.custom.token_regex`
@@ -20,10 +20,12 @@ These option can be setup inside the `.editorconfig`:
     - Example: `todo_analyzer.comment.format.custom.regex = ^ TODO \[MY-PROJECT\] [\d+] .+\.$`
 
 ## Default formats
-- `github` (Default) : `^ TODO \[\#[0-9]+\] .*\.$`
+- `github` (Default) : `^ TODO \[\#[0-9]+\] .*(\.|\!|\?)$`
   - Example: `TODO [#33] This needs to be handled.` 
-- `jira`: `^ TODO \[[a-zA-Z0-9]+\-[0-9]+\] .*\.$`
-    - Example: `TODO [COMMON-1234] This needs to be handled.`
+- `jira`: `^ TODO \[[a-zA-Z0-9]+\-[0-9]+\] .*(\.|\!|\?)$`
+    - Example: `TODO [COMMON-1234] This needs to be handled!`
+- `plain` : `^ TODO\: .*(\.|\!|\?)$`
+    - Example: `TODO: Should we handle this?`
 
 ## Rules
 | Rule ID | Category      | Severity | Url                 |

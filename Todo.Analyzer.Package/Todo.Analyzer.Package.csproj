@@ -16,7 +16,7 @@
         <RepositoryUrl>https://github.com/sanelli/Todo.Analyzer.git</RepositoryUrl>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Description>Validate that TODO comments follow coding standards.</Description>
-        <PackageReleaseNotes>Enable coding standards on TODO comment using GitHub, Jira or custom formats.</PackageReleaseNotes>
+        <PackageReleaseNotes>Enable coding standards on TODO comment using Plain, GitHub, Jira or custom formats.</PackageReleaseNotes>
         <PackageTags>TODO, comments, documentation, analyzers</PackageTags>
         <DevelopmentDependency>true</DevelopmentDependency>
         <NoPackageAnalysis>true</NoPackageAnalysis>
