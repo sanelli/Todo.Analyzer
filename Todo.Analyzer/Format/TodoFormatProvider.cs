@@ -29,6 +29,7 @@ internal static class TodoFormatProvider
             TodoFormatType.GitHub => new GitHubTodoFormat(),
             TodoFormatType.Jira => new JiraTodoFormat(),
             TodoFormatType.Custom => new CustomTodoFormat(GetCustomTokenRegex(analyzerConfigOptions), GetCustomValidationRegex(analyzerConfigOptions)),
+            TodoFormatType.Plain => new PlainTodoFormat(),
 
             // Fallback to GitHub format
             _ => new GitHubTodoFormat(),

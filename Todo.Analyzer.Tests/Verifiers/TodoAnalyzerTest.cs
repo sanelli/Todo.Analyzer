@@ -3,11 +3,9 @@
 // </copyright>
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Testing;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.Testing.Verifiers;
+using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Text;
 
 using Todo.Analyzer.Tests.Helpers;
@@ -18,8 +16,8 @@ namespace Todo.Analyzer.Tests.Verifiers;
 /// Verifier for the analyzer.
 /// </summary>
 /// <typeparam name="TAnalyzer">The analyzer under test.</typeparam>
-public class TodoAnalyzerTest<TAnalyzer>
-    : CSharpAnalyzerTest<TAnalyzer, XUnitVerifier>
+internal sealed class TodoAnalyzerTest<TAnalyzer>
+    : CSharpAnalyzerTest<TAnalyzer, DefaultVerifier>
     where TAnalyzer : DiagnosticAnalyzer, new()
 {
     /// <summary>

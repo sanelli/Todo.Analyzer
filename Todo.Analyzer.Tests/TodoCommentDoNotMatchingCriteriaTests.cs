@@ -11,6 +11,7 @@ namespace Todo.Analyzer.Tests;
 /// Test class for <see cref="TodoCommentDoNotMatchingCriteria"/>.
 /// </summary>
 [UnitTest("TD0001")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "S2699: Add at least one assertion to this test case.", Justification = "The assertions are baked inside the run method.")]
 public sealed class TodoCommentDoNotMatchingCriteriaTests
 {
     private const string GitHubEditorConfig = """
@@ -61,6 +62,12 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             todo_analyzer.comment.format.custom.regex = \q
             """;
 
+    private const string PlainEditorConfig = """
+            root = true
+            [*]
+            todo_analyzer.comment.format = plain
+            """;
+
     /// <summary>
     /// Single line comment with no token in the comment will be ignored
     /// and no diagnostic will be reported.
@@ -73,7 +80,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         // This comment will be ignored because there is no T O D O token!
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -87,7 +94,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         //
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -101,22 +108,26 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         // This won't fail because: TheTodoIsNotATokenOnItsOwn
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
     /// Test that a correctly github formatted single line comment
     /// report no diagnostics.
     /// </summary>
+    /// <param name="ending">The type of ending for the line.</param>
     /// <returns>The asynchronous task.</returns>
-    [Fact]
-    public async Task CorrectlyFormattedGithubTodoSingleLineCommentWillNotReportDiagnostic()
+    [Theory]
+    [InlineData(".")]
+    [InlineData("!")]
+    [InlineData("?")]
+    public async Task CorrectlyFormattedGithubTodoSingleLineCommentWillNotReportDiagnostic(string ending)
     {
-        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest("""
-        // TODO [#123] This will succeed.
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest($"""
+        // TODO [#123] This will succeed{ending}
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -134,7 +145,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -151,7 +162,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -169,7 +180,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -186,7 +197,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
          * Even more bla */
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -203,7 +214,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
          */
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -220,7 +231,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
          */
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -238,7 +249,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
          */
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -255,7 +266,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
          * TODO [#123] This will not fail. */
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -272,7 +283,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
          TODO [#123] This will not fail. */
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -292,7 +303,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -312,7 +323,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -333,7 +344,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -353,7 +364,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -373,7 +384,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -392,7 +403,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
 
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -411,7 +422,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
 
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -430,7 +441,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
 
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -452,7 +463,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 4));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -472,7 +483,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
 
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -492,7 +503,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
 
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -512,7 +523,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
 
         System.Console.WriteLine("Hello world!");
         """);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -535,7 +546,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 4));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -552,7 +563,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             GitHubEditorConfig);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -572,7 +583,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -591,24 +602,28 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
     /// Test that a correctly JIRA formatted single line comment
     /// report no diagnostics. The editorconfig content is provided by the user.
     /// </summary>
+    /// <param name="ending">The ending of the comment line.</param>
     /// <returns>The asynchronous task.</returns>
-    [Fact]
-    public async Task CorrectlyFormattedJiraTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic()
+    [Theory]
+    [InlineData(".")]
+    [InlineData("!")]
+    [InlineData("?")]
+    public async Task CorrectlyFormattedJiraTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic(string ending)
     {
         var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
-            """
-            // TODO [STEFANO-1984] This will succeed.
+           $"""
+            // TODO [STEFANO-1984] This will succeed{ending}
             System.Console.WriteLine("Hello world!");
             """,
-            JiraEditorConfig);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+           JiraEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -628,7 +643,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -647,7 +662,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -663,7 +678,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             MalformedEditorConfig);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -682,7 +697,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -698,7 +713,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             CustomFormatEditorConfig);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -714,7 +729,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             CustomFormatEditorConfig);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -735,7 +750,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -753,7 +768,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             CustomFormatEditorConfigWithoutTokenRegex);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -774,7 +789,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -792,7 +807,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             CustomFormatEditorConfigWithoutRegex);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -809,7 +824,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             System.Console.WriteLine("Hello world!");
             """,
             CustomFormatEditorConfigWithWrongSettings);
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 
     /// <summary>
@@ -829,6 +844,27 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         test.ExpectedDiagnostics.Add(
             new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
                 .WithLocation(1, 1));
-        await test.RunAsync(CancellationToken.None).ConfigureAwait(false);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
+    }
+
+    /// <summary>
+    /// Test that a correctly plainly-formatted single line comment
+    /// report no diagnostics. The editorconfig content is provided by the user.
+    /// </summary>
+    /// <param name="ending">The ending of the comment line.</param>
+    /// <returns>The asynchronous task.</returns>
+    [Theory]
+    [InlineData(".")]
+    [InlineData("!")]
+    [InlineData("?")]
+    public async Task CorrectlyFormattedPlainTodoSingleLineCommentAndEditorconfigWillNotReportDiagnostic(string ending)
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            $"""
+             // TODO: This will succeed{ending}
+             System.Console.WriteLine("Hello world!");
+             """,
+            PlainEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 }
