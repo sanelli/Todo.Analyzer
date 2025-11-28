@@ -16,6 +16,11 @@ internal abstract class TodoFormat
     /// </summary>
     protected internal static readonly Regex DefaultTodoMatchRegex = new(@"\btodo\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+    /// <summary>
+    /// The regular expression group name to extract the task identifier.
+    /// </summary>
+    private const string TaskIdGroupName = "taskId";
+
     private readonly Regex tokenRegex;
     private readonly Regex validationRegex;
 
@@ -42,7 +47,19 @@ internal abstract class TodoFormat
     /// Check if the comment line matched the criteria.
     /// </summary>
     /// <param name="commentLine">A single line of comment without comment markers.</param>
+    /// <param name="taskId">The (optional) task identifier.</param>
     /// <returns><c>true</c> if the comment line has a valid format.</returns>
-    internal bool HasValidCommentLine(string commentLine)
-        => this.validationRegex.Match(commentLine).Success;
+    internal bool HasValidCommentLine(string commentLine, out string? taskId)
+    {
+        var match = this.validationRegex.Match(commentLine);
+        if (match.Success)
+        {
+            var groupCollection = match.Groups[TaskIdGroupName];
+            taskId = groupCollection.Success ? groupCollection.Value : null;
+            return true;
+        }
+
+        taskId = null;
+        return false;
+    }
 }

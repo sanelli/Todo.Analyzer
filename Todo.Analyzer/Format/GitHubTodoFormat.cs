@@ -7,12 +7,12 @@ using System.Text.RegularExpressions;
 namespace Todo.Analyzer.Format;
 
 /// <summary>
-/// Github comment style implementation of <see cref="TodoFormat"/>.
+/// GitHub comment style implementation of <see cref="TodoFormat"/>.
 /// </summary>
 internal sealed class GitHubTodoFormat
     : TodoFormat
 {
-    private static readonly Regex ExpectedToMatch = new(@"^ TODO \[\#[0-9]+\] .*(\.|\!|\?)$", RegexOptions.Compiled);
+    private static readonly Regex ExpectedToMatch = new(@"^ TODO \[\#(?<taskId>[0-9]+)\] .*(\.|\!|\?)$", RegexOptions.Compiled);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="GitHubTodoFormat"/> class.
