@@ -18,13 +18,31 @@
     <resheader name="writer">
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
-    <data name="TD0001_Title" xml:space="preserve">
+    <data name="TA0001_Title" xml:space="preserve">
         <value>Comment malformed</value>
     </data>
-    <data name="TD0001_MessageFormat" xml:space="preserve">
+    <data name="TA0001_MessageFormat" xml:space="preserve">
         <value>does not respect the expected format for the comments</value>
     </data>
-    <data name="TD0001_Description" xml:space="preserve">
+    <data name="TA0001_Description" xml:space="preserve">
         <value>Malformed comment.</value>
+    </data>
+    <data name="TA0002_Title" xml:space="preserve">
+        <value>Comment represent a TODO</value>
+    </data>
+    <data name="TA0002_Description" xml:space="preserve">
+        <value>Comment represent a TODO.</value>
+    </data>
+    <data name="TA0002_MessageFormat" xml:space="preserve">
+        <value>comment represent a TODO entry</value>
+    </data>
+    <data name="TA0003_Description" xml:space="preserve">
+        <value>TODO common references task marked for report.</value>
+    </data>
+    <data name="TA0003_MessageFormat" xml:space="preserve">
+        <value>TODO comment references a task identifier marked for report in the .editorconfig file</value>
+    </data>
+    <data name="TA0003_Title" xml:space="preserve">
+        <value>TODO reference task marked for report</value>
     </data>
 </root>

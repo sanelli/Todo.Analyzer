@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		Documentation\README.md = Documentation\README.md
 		Documentation\TA0001.md = Documentation\TA0001.md
+		Documentation\TA0002.md = Documentation\TA0002.md
+		Documentation\TA0003.md = Documentation\TA0003.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Todo.Analyzer.CodeFixes", "Todo.Analyzer.CodeFixes\Todo.Analyzer.CodeFixes.csproj", "{DF3A0BB3-DE11-4288-BF2D-16AF1CAD7E04}"

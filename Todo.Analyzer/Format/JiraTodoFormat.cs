@@ -12,7 +12,7 @@ namespace Todo.Analyzer.Format;
 internal sealed class JiraTodoFormat
     : TodoFormat
 {
-    private static readonly Regex ExpectedToMatch = new(@"^ TODO \[[a-zA-Z0-9]+\-[0-9]+\] .*(\.|\!|\?)$", RegexOptions.Compiled);
+    private static readonly Regex ExpectedToMatch = new(@"^ TODO \[(?<taskId>[a-zA-Z0-9]+\-[0-9]+)\] .*(\.|\!|\?)$", RegexOptions.Compiled);
 
     /// <summary>
     /// Initializes a new instance of the <see cref="JiraTodoFormat"/> class.

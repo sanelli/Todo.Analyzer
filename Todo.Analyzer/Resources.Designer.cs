@@ -45,21 +45,57 @@ namespace Todo.Analyzer {
             }
         }
         
-        internal static string TD0001_Title {
+        internal static string TA0001_Title {
             get {
-                return ResourceManager.GetString("TD0001_Title", resourceCulture);
+                return ResourceManager.GetString("TA0001_Title", resourceCulture);
             }
         }
         
-        internal static string TD0001_MessageFormat {
+        internal static string TA0001_MessageFormat {
             get {
-                return ResourceManager.GetString("TD0001_MessageFormat", resourceCulture);
+                return ResourceManager.GetString("TA0001_MessageFormat", resourceCulture);
             }
         }
         
-        internal static string TD0001_Description {
+        internal static string TA0001_Description {
             get {
-                return ResourceManager.GetString("TD0001_Description", resourceCulture);
+                return ResourceManager.GetString("TA0001_Description", resourceCulture);
+            }
+        }
+        
+        internal static string TA0002_Title {
+            get {
+                return ResourceManager.GetString("TA0002_Title", resourceCulture);
+            }
+        }
+        
+        internal static string TA0002_Description {
+            get {
+                return ResourceManager.GetString("TA0002_Description", resourceCulture);
+            }
+        }
+        
+        internal static string TA0002_MessageFormat {
+            get {
+                return ResourceManager.GetString("TA0002_MessageFormat", resourceCulture);
+            }
+        }
+        
+        internal static string TA0003_Description {
+            get {
+                return ResourceManager.GetString("TA0003_Description", resourceCulture);
+            }
+        }
+        
+        internal static string TA0003_MessageFormat {
+            get {
+                return ResourceManager.GetString("TA0003_MessageFormat", resourceCulture);
+            }
+        }
+        
+        internal static string TA0003_Title {
+            get {
+                return ResourceManager.GetString("TA0003_Title", resourceCulture);
             }
         }
     }

@@ -68,6 +68,18 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             todo_analyzer.comment.format = plain
             """;
 
+    private const string EnableAlwaysReport = """
+             root = true
+             [*]
+             todo_analyzer.always_report = %TRUTHYVALUE%
+             """;
+
+    private const string EnableReportTasks = """
+              root = true
+              [*]
+              todo_analyzer.report_tasks = 77, 99, 134
+              """;
+
     /// <summary>
     /// Single line comment with no token in the comment will be ignored
     /// and no diagnostic will be reported.
@@ -865,6 +877,65 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
              System.Console.WriteLine("Hello world!");
              """,
             PlainEditorConfig);
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
+    }
+
+#pragma warning disable S1135
+    /// <summary>
+    /// Test that a TA0002 is reported when <c>todo_analyzer.always_report</c> is enabled.
+    /// </summary>
+    /// <param name="value">The truthy value.</param>
+    /// <returns>The asynchronous task.</returns>
+#pragma warning restore S1135
+    [Theory]
+    [InlineData("true")]
+    [InlineData("yes")]
+    [InlineData("1")]
+    [InlineData("enable")]
+    public async Task ReportErrorWhenAlwaysReportFeatureIsEnabled(string value)
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+            """
+             // TODO [#44] This will succeed.
+             System.Console.WriteLine("Hello world!");
+             """,
+            EnableAlwaysReport.Replace("%TRUTHYVALUE%", value, StringComparison.Ordinal));
+        test.ExpectedDiagnostics.Add(
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.CommentExistsRule.Id, TodoCommentDoNotMatchingCriteria.CommentExistsRule.DefaultSeverity)
+                .WithLocation(1, 1));
+        await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
+    }
+
+#pragma warning disable S1135
+    /// <summary>
+    /// Test that a TA0003 is reported when <c>todo_analyzer.report_tasks</c> is set to some values.
+    /// </summary>
+    /// <param name="value">The truthy value.</param>
+    /// <param name="report"><c>true</c> if the error should be reported, <c>false</c> otherwise.</param>
+    /// <returns>The asynchronous task.</returns>
+#pragma warning restore S1135
+    [Theory]
+    [InlineData("77", true)]
+    [InlineData("99", true)]
+    [InlineData("134", true)]
+    [InlineData("15", false)]
+    public async Task ReportErrorWhenTaskIdIsInTheReportList(string value, bool report)
+    {
+        var test = new TodoCommentDoNotMatchingCriteriaAnalyzerTest(
+           $"""
+            // TODO [#{value}] This will succeed.
+            System.Console.WriteLine("Hello world!");
+            """,
+           EnableReportTasks);
+
+        if (report)
+        {
+            test.ExpectedDiagnostics.Add(
+                new DiagnosticResult(
+                    TodoCommentDoNotMatchingCriteria.CommentContainsTaskIdRule.Id,
+                    TodoCommentDoNotMatchingCriteria.CommentContainsTaskIdRule.DefaultSeverity).WithLocation(1, 1));
+        }
+
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
 }
