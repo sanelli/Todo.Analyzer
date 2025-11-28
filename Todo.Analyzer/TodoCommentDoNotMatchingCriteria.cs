@@ -21,9 +21,9 @@ public sealed class TodoCommentDoNotMatchingCriteria
     : DiagnosticAnalyzer
 {
     /// <summary>
-    /// The diagnostic rule.
+    /// The diagnostic rule to report that the comment is incorrectly formatted.
     /// </summary>
-    public static readonly DiagnosticDescriptor Rule = new(
+    public static readonly DiagnosticDescriptor IncorrectlyFormattedCommentRule = new(
         "TA0001",
         new LocalizableResourceString(nameof(Resources.TD0001_Title), Resources.ResourceManager, typeof(Resources)),
         new LocalizableResourceString(nameof(Resources.TD0001_MessageFormat), Resources.ResourceManager, typeof(Resources)),
@@ -41,7 +41,7 @@ public sealed class TodoCommentDoNotMatchingCriteria
     private static readonly Regex EndsWithSpaceAndStarAndSlashAndSpaces = new(@"\s\*\/\s*$", RegexOptions.Compiled);
 
     /// <inheritdoc />
-    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+    public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(IncorrectlyFormattedCommentRule);
 
     /// <inheritdoc />
     public override void Initialize(AnalysisContext context)
@@ -85,11 +85,29 @@ public sealed class TodoCommentDoNotMatchingCriteria
         }
     }
 
-    private static void ReportDiagnosticIfCommentLineDoesNotMatchCriteria(SyntaxTreeAnalysisContext context, string commentLine, TodoFormat todoFormat, Location? location)
+    private static void ReportDiagnosticIfCommentLineDoesNotMatchCriteria(
+        SyntaxTreeAnalysisContext context,
+        string commentLine,
+        TodoFormat todoFormat,
+        GlobalOptions globalOptions,
+        Location? location)
     {
-        if (todoFormat.IsTodoCommentLine(commentLine) && !todoFormat.HasValidCommentLine(commentLine))
+        if (todoFormat.IsTodoCommentLine(commentLine))
         {
-            context.ReportDiagnostic(Diagnostic.Create(Rule, location));
+            if (globalOptions.AlwaysReport)
+            {
+                // TODO: Implement me.
+            }
+
+            if (globalOptions.ReportTasks.Contains(/* todoFormat.IsTodoCommentLine extract the TODO value */))
+            {
+                // TODO: Implement me.
+            }
+
+            if (!todoFormat.HasValidCommentLine(commentLine))
+            {
+                context.ReportDiagnostic(Diagnostic.Create(IncorrectlyFormattedCommentRule, location));
+            }
         }
     }
 

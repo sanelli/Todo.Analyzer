@@ -143,7 +143,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -160,7 +160,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -178,7 +178,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -301,7 +301,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -321,7 +321,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -342,7 +342,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -362,7 +362,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -382,7 +382,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -461,7 +461,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 4));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -544,7 +544,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
         System.Console.WriteLine("Hello world!");
         """);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 4));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -581,7 +581,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             GitHubEditorConfig);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -600,7 +600,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             JiraEditorConfig);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -641,7 +641,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             JiraEditorConfig);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -660,7 +660,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             GitHubEditorConfig);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -695,7 +695,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             CustomFormatEditorConfig);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -748,7 +748,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             CustomFormatEditorConfigWithoutTokenRegex);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -787,7 +787,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             CustomFormatEditorConfigWithoutRegex);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
@@ -842,7 +842,7 @@ public sealed class TodoCommentDoNotMatchingCriteriaTests
             """,
             CustomFormatEditorConfigWithWrongSettings);
         test.ExpectedDiagnostics.Add(
-            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.Rule.Id, TodoCommentDoNotMatchingCriteria.Rule.DefaultSeverity)
+            new DiagnosticResult(TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.Id, TodoCommentDoNotMatchingCriteria.IncorrectlyFormattedCommentRule.DefaultSeverity)
                 .WithLocation(1, 1));
         await test.RunAsync(CancellationToken.None).ConfigureAwait(true);
     }
